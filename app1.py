@@ -7,7 +7,7 @@ import numpy as np
 st.set_page_config(page_title="3D Print Crack Detector", page_icon="🔍")
 
 st.title("🔍 3D Printer Defect Detection")
-st.write("### Project by Akarsh Garg & Aakrit Jain")
+st.write("### Project ")
 
 @st.cache_resource
 def load_my_model():
@@ -45,4 +45,4 @@ if uploaded_file is not None:
             st.error("Model not loaded.")
 
 st.markdown("---")
-st.caption("Developed for BITS Pilani, Hyderabad Campus - 2026")
+st.caption("Developed by Akarsh Garg & Aakrit Jain ")
