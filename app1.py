@@ -12,6 +12,7 @@ st.write("### Project by Akarsh Garg & Aakrit Jain")
 @st.cache_resource
 def load_my_model():
     try:
+        # Looks for the model in the same folder on GitHub
         return tf.keras.models.load_model("crack_detector_model.keras")
     except Exception as e:
         st.error(f"Model file not found in repository.")
@@ -26,6 +27,7 @@ if uploaded_file is not None:
     image = Image.open(uploaded_file).convert("RGB")
     st.image(image, caption='Uploaded Print Surface', use_container_width=True)
     
+    # Preprocessing to match 128x128 training
     img_resized = image.resize((128, 128))
     img_array = tf.keras.utils.img_to_array(img_resized)
     img_array = tf.expand_dims(img_array, 0)
@@ -33,9 +35,12 @@ if uploaded_file is not None:
     if st.button('Start AI Inspection'):
         if model is not None:
             predictions = model.predict(img_array)
+            # Use softmax for probability distribution
             score = tf.nn.softmax(predictions[0])
             result = class_names[np.argmax(score)]
-            st.write(f"Result: **{result}**")
+            confidence = 100 * np.max(score)
+            
+            st.write(f"Result: **{result}** ({confidence:.2f}%)")
         else:
             st.error("Model not loaded.")
 
